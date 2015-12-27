@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n^&5!(l(u0@r0$wr+rm1vor5t_u#-s6cp&szn6cb-d45ko6@(v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,16 +74,16 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'crm_db',
-#         'USER': 'crm_user',
-#         'PASSWORD': 'crm_password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'crm',
+        'USER': 'crm_user',
+        'PASSWORD': 'YKDGPHEziZc9',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 # Password validation
