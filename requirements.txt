@@ -2,3 +2,4 @@ Django==1.9
 djangorestframework==3.3.2
 Pillow==3.0.0
 psycopg2==2.6.1
+Pygments==2.0.2
