@@ -22,4 +22,5 @@ from django.contrib import admin
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
   url(r'^testapi/', include('testapi.urls') ),
+  url(r'^', include('snippets.urls') ),
 ]
