@@ -21,7 +21,8 @@ from django.contrib import admin
 
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
+  url(r'^api/', include('api.urls') ),
   url(r'^testapi/', include('testapi.urls') ),
-  url(r'^', include('snippets.urls') ),
+  url(r'^snippets/', include('snippets.urls') ),
   url(r'^jwt_auth/', include('jwt_auth.urls') ),
 ]
