@@ -27,11 +27,19 @@ class Project(models.Model):
         verbose_name_plural = u'Проекты'
 
 class Task(models.Model):
+    STATUS_CHOICES = (
+        (0, 'Новый'),
+        (1, 'В процессе'),
+        (2, 'Завершено'),
+        (3, 'Проверено'),
+    )
+
     title = models.CharField(max_length=300, verbose_name='Название задачи')
     text = models.TextField(verbose_name='Текст задачи')
     base_task = models.ForeignKey('self', blank=True, null=True, verbose_name='Базовая задача')
     project = models.ForeignKey(Project, verbose_name='Проект')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0)
 
     def __unicode__(self):
         return u'%s %s' % (self.title, self.created_date.strftime("%A, %d. %B %Y %I:%M%p"))
