@@ -8,7 +8,6 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 class RestrictedView(APIView):
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
 
     def get(self, request):
         data = {
