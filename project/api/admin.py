@@ -15,7 +15,6 @@ from .models import (
 class EmployeeAdmin(admin.ModelAdmin):
     fields = (
         'username',
-        'password',
         'avatar',
         'subdivision',
         'first_name',
