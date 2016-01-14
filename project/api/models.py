@@ -3,13 +3,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User, UserManager
 
-class Employee(User):
-    subdivision = models.ManyToManyField('Subdivision')
+from django.contrib.auth.models import User
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subdivision = models.ForeignKey('Subdivision', blank=True, null=True, verbose_name='Подразделение')
     avatar = models.ImageField(upload_to='pictures/employees/%Y/%m/%d', blank=True, null=True, verbose_name='Аватар')
-
-    objects = UserManager()
 
     class Meta:
         verbose_name = u'Сотрудник'
@@ -18,7 +18,7 @@ class Employee(User):
 class Subdivision(models.Model):
     title = models.CharField(max_length=300, verbose_name='Название')
     description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    manager = models.ForeignKey(Employee, verbose_name='Руководитель', related_name='manager')
+    manager = models.ForeignKey(User, verbose_name='Руководитель', related_name='manager')
 
     def __unicode__(self):
         return u'%s' % (self.title)
@@ -30,7 +30,7 @@ class Subdivision(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=300, verbose_name='Название')
     description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    owner = models.ForeignKey(Employee, verbose_name='Владелец')
+    owner = models.ForeignKey(User, verbose_name='Владелец')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
 
     def __unicode__(self):
@@ -57,8 +57,8 @@ class Task(models.Model):
     text = models.TextField(verbose_name='Текст')
     base_task = models.ForeignKey('self', blank=True, null=True, verbose_name='Базовая задача')
     project = models.ForeignKey(Project, verbose_name='Проект')
-    owner = models.ForeignKey(Employee, verbose_name='Постановщик', related_name='owner')
-    responsible = models.ForeignKey(Employee, verbose_name='Ответственный', related_name='responsible')
+    owner = models.ForeignKey(User, verbose_name='Постановщик', related_name='owner')
+    responsible = models.ForeignKey(User, verbose_name='Ответственный', related_name='responsible')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
     priority = models.PositiveSmallIntegerField(choices=PRIORITY_CHOICES, default=0, verbose_name='Приоритет')
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, verbose_name='Статус')
@@ -82,7 +82,7 @@ class TaskPicture(models.Model):
 class Comment(models.Model):
     task = models.ForeignKey(Task, verbose_name='Задача')
     text = models.TextField(verbose_name='Текст комментария')
-    employee = models.ForeignKey(Employee, verbose_name='Сотрудник')
+    employee = models.ForeignKey(User, verbose_name='Сотрудник')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
 
     def __unicode__(self):

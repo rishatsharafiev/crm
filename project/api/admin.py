@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 
 from .models import (
     Employee,
@@ -12,22 +14,13 @@ from .models import (
     CommentPicture
   )
 
-class EmployeeAdmin(admin.ModelAdmin):
-    fields = (
-        'username',
-        'avatar',
-        'subdivision',
-        'first_name',
-        'last_name',
-        'email',
-        'is_active',
-        'is_staff',
-        'is_superuser',
-        'last_login',
-        'date_joined'
-    )
+class EmployeeInline(admin.StackedInline):
+    model = Employee
+    can_delete = False
+    verbose_name_plural = 'Дополнительные поля'
 
-    readonly_fields = ('username',)
+class UserAdmin(BaseUserAdmin):
+    inlines = (EmployeeInline, )
 
 class SubdivisionAdmin(admin.ModelAdmin):
     pass
@@ -56,7 +49,9 @@ class CommentPictureAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Employee, EmployeeAdmin)
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(Subdivision, SubdivisionAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Task, TaskAdmin)
