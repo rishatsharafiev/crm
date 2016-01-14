@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, UserManager
 
 class Employee(User):
     subdivision = models.ManyToManyField('Subdivision')
+    avatar = models.ImageField(upload_to='pictures/employees/%Y/%m/%d', blank=True, null=True, verbose_name='Аватар')
 
     objects = UserManager()
 
@@ -71,7 +72,7 @@ class Task(models.Model):
         verbose_name_plural = u'Задачи'
 
 class TaskPicture(models.Model):
-    path = models.ImageField(upload_to='pictures/%Y/%m/%d', verbose_name='Изображение')
+    path = models.ImageField(upload_to='pictures/tasks/%Y/%m/%d', verbose_name='Изображение')
     task = models.ForeignKey(Task, verbose_name='Задача')
 
     class Meta:
@@ -93,7 +94,7 @@ class Comment(models.Model):
         verbose_name_plural = u'Комментарии'
 
 class CommentPicture(models.Model):
-    path = models.ImageField(upload_to='pictures/%Y/%m/%d', verbose_name='Изображение')
+    path = models.ImageField(upload_to='pictures/comments/%Y/%m/%d', verbose_name='Изображение')
     comment = models.ForeignKey(Comment, verbose_name='Комментарий')
 
     class Meta:

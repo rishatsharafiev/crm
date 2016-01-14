@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
 from .models import (
     Employee,
@@ -13,8 +12,23 @@ from .models import (
     CommentPicture
   )
 
-class EmployeeAdmin(UserAdmin):
-    pass
+class EmployeeAdmin(admin.ModelAdmin):
+    fields = (
+        'username',
+        'password',
+        'avatar',
+        'subdivision',
+        'first_name',
+        'last_name',
+        'email',
+        'is_active',
+        'is_staff',
+        'is_superuser',
+        'last_login',
+        'date_joined'
+    )
+
+    readonly_fields = ('username',)
 
 class SubdivisionAdmin(admin.ModelAdmin):
     pass

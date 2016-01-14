@@ -1,0 +1,32 @@
+{
+  "name": "bbamd",
+  "version": "0.1.0",
+  "authors": [
+    "rishatsharafiev <rishatsharafiev@ya.ru>"
+  ],
+  "description": "",
+  "main": "js/main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "text": "requirejs-text#~2.0.14",
+    "bootstrap": "~3.3.6",
+    "requirejs": "~2.1.22",
+    "backbone": "~1.2.3",
+    "underscore": "~1.8.3",
+    "json2": "*"
+  }
+}
