@@ -27,6 +27,7 @@
     "requirejs": "~2.1.22",
     "backbone": "~1.2.3",
     "underscore": "~1.8.3",
-    "json2": "*"
+    "json2": "*",
+    "jquery.cookie": "~1.4.1"
   }
 }
