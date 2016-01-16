@@ -5,12 +5,14 @@ define(function(require){
 
   var BaseView = require('views/main/base');
   var LoginView = require('views/auth/login');
+  var TaskListView = require('views/tasks/list');
 
   var AppRouter = Backbone.Router.extend({
     routes: {
       // Define some URL routes
       '': 'showIndex',
       'login': 'showLogin',
+      'tasks': 'showTasks',
       // Default
       '*actions': 'defaultAction'
     },
@@ -39,6 +41,11 @@ define(function(require){
     showLogin: function(){
       var loginView = new LoginView();
       loginView.render();
+    },
+
+    showTasks: function(){
+      var taskListView = new TaskListView();
+      taskListView.render();
     },
   });
 

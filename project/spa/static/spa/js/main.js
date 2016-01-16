@@ -9,6 +9,8 @@ require.config({
     'backbone': 'extend/backbone',
     'backbone.sync': 'extend/backbone.sync',
     'text': [/* '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text.min',*/ 'libs/text/text'],
+    'backgrid': 'libs/backgrid/lib/backgrid.min',
+    'backbone.paginator': 'libs/backbone.paginator/lib/backbone.paginator.min',
 
     'parsley': 'libs/parsleyjs/dist/parsley.min',
 
@@ -37,6 +39,12 @@ require.config({
     },
     'text': {
         exports: 'text'
+    },
+    'backgrid': {
+        deps: ['underscore', 'jquery', 'backbone'],
+    },
+    'backbone.paginator': {
+        deps: ['underscore', 'backbone'],
     },
 
     /* jquery plugins */
@@ -82,5 +90,5 @@ require([
   'app',
   'adminlte'
 ], function(App){
-  App.initialize();
+    App.initialize();
 });
