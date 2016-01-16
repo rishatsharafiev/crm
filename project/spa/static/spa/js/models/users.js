@@ -1,7 +1,6 @@
 define([
-  'underscore',
-  'backbone'
-], function(_, Backbone){
+  'app'
+], function(app){
   var UserModel = Backbone.Model.extend({});
   return UserModel;
 });

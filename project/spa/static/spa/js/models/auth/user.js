@@ -1,13 +1,16 @@
 define([
+  'jquery',
   'underscore',
   'backbone'
-], function(_, Backbone){
+], function(){
   var UserModel = Backbone.Model.extend({
     defaults: {
       username: "",
       password: ""
     },
-    url: '/api/login/'
+    url: function () {
+      return '/api/login/';
+    }
   });
   // Return the model for the module
   return UserModel;

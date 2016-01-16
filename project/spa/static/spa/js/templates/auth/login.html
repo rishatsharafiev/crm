@@ -4,7 +4,7 @@
   </div><!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Войдите, чтобы начать работу.</p>
-    <div id="login-form">
+    <form id="login-form" data-validate="parsley">
       <div class="form-group has-feedback">
         <input id="username" type="text" class="form-control" placeholder="Логин">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -18,7 +18,7 @@
 
         </div><!-- /.col -->
         <div class="col-xs-4">
-          <button id="login-submit" type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+          <a href="#" id="login-btn" type="submit" class="btn btn-primary btn-block btn-flat">Войти</a>
         </div><!-- /.col -->
       </div>
     </form>

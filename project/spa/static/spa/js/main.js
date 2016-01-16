@@ -1,4 +1,5 @@
 require.config({
+  baseUrl: '/static/spa/js/',
   waitSeconds: 0,
   urlArgs: 'bust=' + (new Date()).getTime(),
   paths: {
@@ -9,19 +10,19 @@ require.config({
     'backbone.sync': 'extend/backbone.sync',
     'text': [/* '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text.min',*/ 'libs/text/text'],
 
+    'parsley': 'libs/parsleyjs/dist/parsley.min',
+
     'jquery': [/*'//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min', '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min',*/ 'libs/jquery/dist/jquery.min'],
     'bootstrap': [/* '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min',*/ 'libs/bootstrap/dist/js/bootstrap.min'],
     'jquery.cookie': [/*'//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min',*/ 'libs/jquery.cookie/jquery.cookie'],
     'jquery.sparkline': 'libs/AdminLTE/plugins/sparkline/jquery.sparkline.min',
-    'jvectormap': 'libs/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min',
-    'jvectormap-world': 'libs/AdminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en',
     'slimscroll': 'libs/AdminLTE/plugins/slimScroll/jquery.slimscroll.min',
     'icheck': 'libs/AdminLTE/plugins/iCheck/icheck.min',
     'fastclick': 'libs/AdminLTE/plugins/fastclick/fastclick',
     'chartjs': 'libs/AdminLTE/plugins/chartjs/Chart.min',
 
     'adminlte-raw': 'libs/AdminLTE/dist/js/app',
-    'adminlte': 'extend/adminlte'
+    'adminlte': 'extend/adminlte',
   },
   shim: {
     'json': {
@@ -37,7 +38,11 @@ require.config({
     'text': {
         exports: 'text'
     },
+
     /* jquery plugins */
+    'parsley': {
+        deps: ['jquery']
+    },
     'bootstrap': {
         deps: ['jquery']
     },
@@ -45,12 +50,6 @@ require.config({
         deps: ['jquery']
     },
     'jquery.sparkline': {
-        deps: ['jquery']
-    },
-    'jvectormap': {
-        deps: ['jquery']
-    },
-    'jvectormap-world': {
         deps: ['jquery']
     },
     'slimscroll': {
@@ -65,13 +64,23 @@ require.config({
     'chartjs': {
         deps: ['jquery']
     },
+    'adminlte-raw': {
+        deps: [
+            'jquery',
+            'bootstrap',
+            'jquery.sparkline',
+            'slimscroll',
+            'icheck',
+            'fastclick',
+            'chartjs',
+        ]
+    }
   }
 });
 
 require([
   'app',
-  'backbone',
   'adminlte'
-], function(App, Backbone){
+], function(App){
   App.initialize();
 });
