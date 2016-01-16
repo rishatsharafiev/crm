@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
+from rest_framework import exceptions
 from django.contrib.auth.models import User
 from .models import (
     Employee,
@@ -36,13 +37,30 @@ class EmployeeSerializer(serializers.ModelSerializer):
         employee = Employee.objects.create(user=user, **validated_data)
         return employee
 
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        for key in user_data:
+            instance[key] = user_data.get(key, instance[key])
+
+        for key in validated_data:
+            instance[key] = validated_data.get(key, instance[key])
+        instance.save()
+        return instance
+
 class SubdivisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subdivision
 
 class ProjectSerializer(serializers.ModelSerializer):
+    link = serializers.HyperlinkedIdentityField(view_name='project-detail')
     class Meta:
         model = Project
+
+class TaskProjectSerializer(serializers.ModelSerializer):
+    link = serializers.HyperlinkedIdentityField(view_name='project-detail')
+    class Meta:
+        model = Task
+        fields =( 'title', 'link',)
 
 class TaskParentSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(view_name='task-detail')
@@ -50,12 +68,25 @@ class TaskParentSerializer(serializers.ModelSerializer):
         model = Task
         fields =( 'title', 'link',)
 
-class TaskSerializer(serializers.ModelSerializer):
-    project = ProjectSerializer(read_only=True)
+class TaskSerializer(serializers.HyperlinkedModelSerializer):
     base_task = TaskParentSerializer(read_only=True)
 
     class Meta:
         model = Task
+        fields = (
+            'id',
+            'url',
+            'base_task',
+            'title',
+            'text',
+            'created_date',
+            'priority',
+            'status',
+            'project',
+            'owner',
+            'responsible'
+        )
+
 
 class CommentSerializer(serializers.ModelSerializer):
     owner = EmployeeSerializer(read_only=True)
