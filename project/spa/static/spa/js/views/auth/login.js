@@ -55,9 +55,15 @@ define([
           });
           user.save(null, {
               success: function(model, response) {
-                console.log('login success! ');
-                $.cookie('access_token', response.token);
-                Backbone.navigate('feed');
+                if(response.token && atob) {
+                  var jwt = response.token.split('.');
+                  var payload = JSON.parse(atob(jwt[1]));
+                  var days = payload.exp;
+                  console.log(payload);
+                  console.log('login success! ');
+                  $.cookie('access_token', response.token, {'expire': 7});
+                  Backbone.navigate('');
+                }
               },
               error: function(model, response) {
                 this.$('#login-error').append(response);
@@ -108,24 +114,6 @@ define([
 
       this.$el.html(htmlText);
       return this.$el;
-    },
-
-    action: function (e) {
-      e.preventDefault();
-      var user = new UserModel({
-        username: this.$el.find('#username').val(),
-        password: this.$el.find('#password').val()
-      });
-      user.save(null, {
-          success: function(model, response) {
-            console.log('login success! ');
-            $.cookie('access_token', response.token);
-            Backbone.navigate('feed');
-          },
-          error: function(model, response) {
-              console.log('login error! ');
-          }
-      });
     }
   });
 

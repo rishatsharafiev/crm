@@ -56,20 +56,27 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
 
-class TaskProjectSerializer(serializers.ModelSerializer):
-    link = serializers.HyperlinkedIdentityField(view_name='project-detail')
-    class Meta:
-        model = Task
-        fields =( 'title', 'link',)
-
 class TaskParentSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(view_name='task-detail')
     class Meta:
         model = Task
-        fields =( 'title', 'link',)
+        fields =( 'id','title', 'link',)
 
-class TaskSerializer(serializers.HyperlinkedModelSerializer):
+class EmployeeChildField(serializers.RelatedField):
+    def to_representation(self, value):
+        return value.username
+
+class TaskSerializer(serializers.ModelSerializer):
     base_task = TaskParentSerializer(read_only=True)
+    project_name = serializers.CharField(
+       source='project', read_only=True,required=False
+    )
+    owner_name = EmployeeChildField(
+       source='owner', read_only=True,required=False
+    )
+    responsible_name = EmployeeChildField(
+       source='responsible', read_only=True,required=False
+    )
 
     class Meta:
         model = Task
@@ -84,9 +91,11 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
             'status',
             'project',
             'owner',
-            'responsible'
+            'responsible',
+            'project_name',
+            'owner_name',
+            'responsible_name',
         )
-
 
 class CommentSerializer(serializers.ModelSerializer):
     owner = EmployeeSerializer(read_only=True)

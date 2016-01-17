@@ -9,9 +9,13 @@ require.config({
     'backbone': 'extend/backbone',
     'backbone.sync': 'extend/backbone.sync',
     'text': [/* '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text.min',*/ 'libs/text/text'],
-    'backgrid': 'libs/backgrid/lib/backgrid.min',
     'backbone.paginator': 'libs/backbone.paginator/lib/backbone.paginator.min',
+    'backgrid': 'libs/backgrid/lib/backgrid.min',
+    'backgrid-paginator': 'libs/backgrid-paginator/backgrid-paginator',
+    'backgrid-text-cell': 'libs/backgrid-text-cell/backgrid-text-cell.min',
+    'backgrid-moment-cell': 'libs/backgrid-moment-cell/backgrid-moment-cell',
 
+    'moment': 'libs/moment/moment',
     'parsley': 'libs/parsleyjs/dist/parsley.min',
 
     'jquery': [/*'//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min', '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min',*/ 'libs/jquery/dist/jquery.min'],
@@ -41,10 +45,20 @@ require.config({
         exports: 'text'
     },
     'backgrid': {
-        deps: ['underscore', 'jquery', 'backbone'],
+        deps: ['underscore', 'jquery', 'backbone']
+    },
+    'backgrid-paginator': {
+        deps: ['backgrid']
+    },
+    'backgrid-text-cell': {
+        deps: ['backgrid']
+    },
+    'backgrid-moment-cell': {
+        deps: ['backgrid', 'moment']
     },
     'backbone.paginator': {
         deps: ['underscore', 'backbone'],
+        exports: 'Backbone.Paginator'
     },
 
     /* jquery plugins */

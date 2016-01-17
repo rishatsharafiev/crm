@@ -11,6 +11,9 @@ class Employee(models.Model):
     subdivision = models.ForeignKey('Subdivision', blank=True, null=True, verbose_name='Подразделение')
     avatar = models.ImageField(upload_to='pictures/employees/%Y/%m/%d', blank=True, null=True, verbose_name='Аватар')
 
+    def __unicode__(self):
+        return u'%s %s' % (self.user.first_name, self.user.last_name)
+
     class Meta:
         verbose_name = u'Сотрудник'
         verbose_name_plural = u'Сотрудники'
@@ -34,7 +37,7 @@ class Project(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
 
     def __unicode__(self):
-        return u'%s %s' % (self.title, self.created_date.strftime("%A, %d. %B %Y %I:%M%p"))
+        return u'%s' % (self.title)
 
     class Meta:
         verbose_name = u'Проект'

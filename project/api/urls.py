@@ -13,14 +13,16 @@ router.register(r'comment', views.CommentViewSet)
 router.register(r'task_picture', views.TaskPictureViewSet)
 router.register(r'comment_picture', views.CommentPictureViewSet)
 
+
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
-
 urlpatterns += [
-    url(r'^login/$', 'rest_framework_jwt.views.obtain_jwt_token', name="api-login")
+    url(r'^login/$', 'rest_framework_jwt.views.obtain_jwt_token', name="api-login"),
+    url(r'^api-token-verify/$', 'rest_framework_jwt.views.verify_jwt_token'),
+    url(r'^api-token-refresh/$', 'rest_framework_jwt.views.refresh_jwt_token'),
 ]
 
 

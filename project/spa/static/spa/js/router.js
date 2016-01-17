@@ -6,13 +6,16 @@ define(function(require){
   var BaseView = require('views/main/base');
   var LoginView = require('views/auth/login');
   var TaskListView = require('views/tasks/list');
+  var TaskView = require('views/tasks/item');
 
   var AppRouter = Backbone.Router.extend({
     routes: {
       // Define some URL routes
       '': 'showIndex',
-      'login': 'showLogin',
+      'login': 'login',
+      'logout': 'logout',
       'tasks': 'showTasks',
+      'tasks/:id': 'showTask',
       // Default
       '*actions': 'defaultAction'
     },
@@ -38,14 +41,24 @@ define(function(require){
       // indexView.render();
     },
 
-    showLogin: function(){
+    login: function(){
       var loginView = new LoginView();
       loginView.render();
+    },
+
+    logout: function(){
+      $.removeCookie('access_token', { path: '/' });
+      Backbone.navigate('', true);
     },
 
     showTasks: function(){
       var taskListView = new TaskListView();
       taskListView.render();
+    },
+
+    showTask: function(id){
+      var taskView = new TaskView();
+      taskView.render({id: id});
     },
   });
 

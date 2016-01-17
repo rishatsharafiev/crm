@@ -1,3 +1,7 @@
 .content-wrapper > .content {
   min-height: 40em;
 }
+
+.backgrid th {
+  text-align: left;
+}

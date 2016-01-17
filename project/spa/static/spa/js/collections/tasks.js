@@ -13,22 +13,53 @@ define([
   //     }
   // });
   var TaskCollection = Backbone.PageableCollection.extend({
+    model: TaskModel,
+    mode: 'server',
     url: '/api/task/',
+
+    resultsField: 'results',
+    totalRecordsField: 'count',
+    nextField: 'next',
+    previousField: 'previous',
+
     state: {
-      pageSize: 30
+      pageSize: 18
     },
+
     queryParams: {
-      totalPages: null,
-      totalRecords: null,
+      currentPage:'page',
+      pageSize: 'page_size',
+      sortKey: 'sort'
     },
-    parseState: function (response, queryParams, state, options) {
-      return {totalRecords: response.count};
+
+    parseState: function (resp, queryParams, state, options) {
+      return {totalRecords: resp[this.totalRecordsField]};
     },
-    parseRecords: function (response, options) {
-      return response.results;
+
+    parseLinks: function(resp, options) {
+      return {
+        prev: resp[this.previousField],
+        next: resp[this.nextField],
+        first: null
+      }
+    },
+
+    parseRecords: function (resp, options) {
+      if( resp && _.has(resp, this.resultsField) && _.isArray(resp[this.resultsField]) ) {
+        return resp.results;
+      } else {
+        return Backbone.PageableCollection.prototype.parseRecords.apply(this, arguments);
+      }
+    },
+
+    hasPrevious: function() {
+      return this.hasPreviousPage();
+    },
+
+    hasNext: function() {
+      return this.hasNextPage();
     }
   });
-
 
   return TaskCollection;
 });

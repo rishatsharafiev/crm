@@ -21,6 +21,7 @@ from .serializers import (
     TaskPictureSerializer,
     CommentPictureSerializer
   )
+from .permissions import TaskPermission
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
@@ -38,6 +39,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = (TaskPermission,)
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
@@ -50,3 +52,4 @@ class TaskPictureViewSet(viewsets.ModelViewSet):
 class CommentPictureViewSet(viewsets.ModelViewSet):
     queryset = CommentPicture.objects.all()
     serializer_class = CommentPictureSerializer
+
