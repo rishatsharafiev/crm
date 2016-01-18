@@ -5,3 +5,7 @@
 .backgrid th {
   text-align: left;
 }
+
+.box .box-body {
+  min-height: 35em;
+}
