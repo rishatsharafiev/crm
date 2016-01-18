@@ -2,15 +2,17 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!templates/tasks/list.html',
-  'text!templates/tasks/list_box.html',
+
+  'views/main/box',
+
+  'text!templates/tasks/tasks.html',
   'collections/tasks',
-  'jquery.cookie',
+
   'backgrid',
   'backgrid-paginator',
   'backgrid-text-cell',
   'backgrid-moment-cell'
-], function($, _, Backbone, listTemplate, listBoxTemplate, TaskCollection){
+], function($, _, Backbone, BoxView, listTemplate, TaskCollection){
   var columns = [{
       name: "id",
       label: "#",
@@ -94,34 +96,22 @@ define([
      }, {
         name: "created_date",
         label: "Дата создания",
-        sortable: false,
+        sortable: true,
         editable: false,
         cell: Backgrid.Extension.MomentCell.extend({
           modelFormat: "YYYY-M-DTHH:mm:ss.SSSZ",
-          // You can specify the locales of the model and display formats too
-          displayLang: "ru-ru",
-          displayFormat: "YYYY-MMM-DD HH:mm:ss"
+          displayLang: "ru",
+          displayFormat: "DD MMMM YYYY, HH:mm:ss"
         })
      }];
 
-  var TaskBoxView = Backbone.View.extend({
-    el: '#left-content',
-    template:  _.template( listBoxTemplate),
-    render: function() {
-      this.$el.html(this.template({}));
-    }
-  });
-
   var TaskListView = Backbone.View.extend({
-    el: '#left-content',
 
-    template:  _.template( listTemplate),
+    template:  _.template( listTemplate ),
 
     initialize: function() {
       _.bindAll(this,'render');
       this.collection =  new TaskCollection();
-      var taskBoxView = new TaskBoxView();
-      taskBoxView.render();
     },
 
     render: function() {
@@ -134,9 +124,17 @@ define([
         collection: this.collection
       });
 
-      console.log(this.$el.find('#tasks-table'));
-      this.$el.find('#tasks-table').append(grid.render().$el);
-      this.$el.find('#tasks-pagination').append(paginator.render().$el);
+      var boxView = new BoxView();
+
+      boxView.render({
+        el: '#box',
+        context: {
+          title: 'Задачи',
+          body: grid.render().$el,
+          footer: paginator.render().$el
+        }
+      });
+
       this.collection.fetch({reset: true});
       return this;
     }

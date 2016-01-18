@@ -23,13 +23,18 @@ define([
     previousField: 'previous',
 
     state: {
-      pageSize: 18
+      pageSize: 15,
+      order: -1
     },
 
     queryParams: {
       currentPage:'page',
-      pageSize: 'page_size',
-      sortKey: 'sort'
+      pageSize: 'size',
+      order: "ordering",
+      directions: {
+        "-1": "created_date",
+        "1": "created_date"
+      }
     },
 
     parseState: function (resp, queryParams, state, options) {

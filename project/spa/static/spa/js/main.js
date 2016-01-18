@@ -16,6 +16,7 @@ require.config({
     'backgrid-moment-cell': 'libs/backgrid-moment-cell/backgrid-moment-cell',
 
     'moment': 'libs/moment/moment',
+    'moment-ru': 'libs/moment/lang/ru',
     'parsley': 'libs/parsleyjs/dist/parsley.min',
 
     'jquery': [/*'//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min', '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min',*/ 'libs/jquery/dist/jquery.min'],
@@ -54,7 +55,7 @@ require.config({
         deps: ['backgrid']
     },
     'backgrid-moment-cell': {
-        deps: ['backgrid', 'moment']
+        deps: ['backgrid', 'moment', 'moment-ru']
     },
     'backbone.paginator': {
         deps: ['underscore', 'backbone'],

@@ -4,7 +4,6 @@ define([
   'backbone',
   'text!templates/main/base.html',
   'models/auth/user',
-  'jquery.cookie'
 ], function($, _, Backbone, indexTemplate, UserModel){
   var IndexView = Backbone.View.extend({
     el: $('#page'),

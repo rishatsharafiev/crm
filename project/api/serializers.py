@@ -67,9 +67,10 @@ class EmployeeChildField(serializers.RelatedField):
         return value.username
 
 class TaskSerializer(serializers.ModelSerializer):
+    owner =  serializers.PrimaryKeyRelatedField(read_only=True, required=False)
     base_task = TaskParentSerializer(read_only=True)
     project_name = serializers.CharField(
-       source='project', read_only=True,required=False
+       source='project', read_only=True, required=False
     )
     owner_name = EmployeeChildField(
        source='owner', read_only=True,required=False
@@ -96,6 +97,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'owner_name',
             'responsible_name',
         )
+
 
 class CommentSerializer(serializers.ModelSerializer):
     owner = EmployeeSerializer(read_only=True)

@@ -13,9 +13,9 @@ define([
         options.data = JSON.stringify(options.attrs || model.toJSON());
     }
 
-    _.extend( options.headers, {
-        "Authorization": "JWT " + $.cookie('access_token')
-    });
+    options.beforeSend =function(xhr) {
+      xhr.setRequestHeader('Authorization' , 'JWT ' + $.cookie('access_token'))
+    }
 
     return _sync.call( this, method, model, options );
   };

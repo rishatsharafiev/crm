@@ -5,8 +5,8 @@ define(function(require){
 
   var BaseView = require('views/main/base');
   var LoginView = require('views/auth/login');
-  var TaskListView = require('views/tasks/list');
-  var TaskView = require('views/tasks/item');
+  var TaskListView = require('views/tasks/tasks');
+  var TaskPageView = require('views/tasks/task_page');
 
   var AppRouter = Backbone.Router.extend({
     routes: {
@@ -28,7 +28,7 @@ define(function(require){
       }
     },
     after: function () {
-        console.log('after');
+        // console.log('aftet
     },
 
     showDefault: function(){
@@ -57,8 +57,13 @@ define(function(require){
     },
 
     showTask: function(id){
-      var taskView = new TaskView();
-      taskView.render({id: id});
+      if (id && id.match(/^\d+$/)){
+        var taskPageView = new TaskPageView({id: id});
+        taskPageView.render();
+      } else {
+        var notFoundView = new NotFoundView();
+        notFoundView.render();
+      }
     },
   });
 
