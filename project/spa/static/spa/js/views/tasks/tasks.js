@@ -93,6 +93,38 @@ define([
             return this;
           }
         }),
+     },
+     {
+        name: "status",
+        label: "Статус",
+        sortable: true,
+        editable: false,
+        cell: Backgrid.StringCell.extend({
+          render: function(){
+            var status_choices = ['Новый', 'В процессе', 'Завершено', 'Проверено'];
+            var status = this.model.get("status");
+            var status_text = status_choices[status ] || '-';
+            this.$el.empty();
+            this.$el.append('<span>' + status_text +'</span>');
+            return this;
+          }
+        }),
+     },
+     {
+        name: "priority",
+        label: "Приоритет",
+        sortable: true,
+        editable: false,
+        cell: Backgrid.StringCell.extend({
+          render: function(){
+            var priority_choices = ['Низкий', 'Средний', 'Высокий'];
+            var priority = this.model.get("priority");
+            var priority_text = priority_choices[priority ] || '-';
+            this.$el.empty();
+            this.$el.append('<span>' + priority_text +'</span>');
+            return this;
+          }
+        }),
      }, {
         name: "created_date",
         label: "Дата создания",

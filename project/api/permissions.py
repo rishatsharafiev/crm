@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from django.db.models import Q
 from .models import Task
 
 class TaskPermission(permissions.BasePermission):
@@ -20,8 +21,27 @@ class TaskPermission(permissions.BasePermission):
         owner = authenticated and (obj.owner == request.user)
         responsible = authenticated and (obj.responsible == request.user)
 
+        task =  Task.objects.filter(
+            Q(owner=request.user) | Q(responsible=request.user)
+        )
+
+        ids = []
+
+        for i in task:
+            ids.append(i.id)
+
+        def walk(task):
+            if task.base_task:
+                ids.append(task.base_task.id)
+                walk(task.base_task)
+
+        for i in task:
+            walk(i)
+
+        task = Task.objects.filter(id__in=ids)
+
         if view.action == 'retrieve':
-            return owner or responsible or staff
+            return task or owner or responsible or staff
         elif view.action in ['update', 'partial_update']:
             return owner or responsible or staff
         elif view.action == 'destroy':

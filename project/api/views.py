@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.db.models import Q
+from django.db.models import Q, F
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
 from rest_framework import viewsets
@@ -50,21 +50,29 @@ class TaskViewSet(viewsets.ModelViewSet):
     ordering = ('-created_date',)
 
     def get_queryset(self):
-        return Task.objects.filter( Q(owner=self.request.user) | Q(responsible=self.request.user) )
+        task = Task.objects.filter( Q(owner=self.request.user) | Q(responsible=self.request.user) )
+
+        ids = []
+
+        for i in task:
+            ids.append(i.id)
+
+        def walk(task):
+            if task.base_task:
+                ids.append(task.base_task.id)
+                walk(task.base_task)
+
+        for i in task:
+            walk(i)
+
+        task = Task.objects.filter(id__in=ids)
+        return task
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
-
-    @list_route(methods=['get'])
-    def tasks_permission(self, request):
-        queryset = self.get_queryset.filter(Q(owner=request.user) | Q(responsible=request.user))
-        print 'Hello'
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
 
 
 
