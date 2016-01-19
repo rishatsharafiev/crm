@@ -39,9 +39,10 @@ define([
       cell: Backgrid.UriCell.extend({
         render: function(){
           var base_task = this.model.get("base_task");
+          var base_task_name = this.model.get("base_task_name");
           this.$el.empty();
           if(base_task) {
-            this.$el.append('<a href="#tasks/'+base_task['id']+'">'+base_task['title']+'</a>');
+            this.$el.append('<a href="#tasks/'+base_task+'">'+base_task_name+'</a>');
           } else {
             this.$el.append('-');
           }

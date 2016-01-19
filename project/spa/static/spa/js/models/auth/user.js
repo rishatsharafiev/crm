@@ -9,7 +9,7 @@ define([
       password: ""
     },
     url: function () {
-      return '/api/login/';
+      return '/api/login';
     }
   });
   // Return the model for the module

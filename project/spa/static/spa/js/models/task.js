@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone){
   var TaskModel = Backbone.Model.extend({
-    urlRoot: '/api/task/',
+    urlRoot: '/api/task',
     validate: function(attrs, options) {
 
     }

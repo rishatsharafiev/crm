@@ -60,9 +60,6 @@ define(function(require){
       if (id && id.match(/^\d+$/)){
         var taskPageView = new TaskPageView({id: id});
         taskPageView.render();
-      } else {
-        var notFoundView = new NotFoundView();
-        notFoundView.render();
       }
     },
   });

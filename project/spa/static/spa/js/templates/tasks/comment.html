@@ -1,0 +1,10 @@
+<div class="timeline-item">
+  <span class="time"><i class="fa fa-clock-o"></i><%= model.title ? model.title : '' %></span>
+  <h3 class="timeline-header"><a href="#employees/<%= model.employee ? model.employee : '' %>"><%= model.employee_name ? model.employee_name : '' %></a></h3>
+  <div class="timeline-body">
+    <%= model.text ? model.text : '' %>
+  </div>
+  <div class="timeline-footer">
+    <a class="btn btn-warning btn-flat btn-xs"></a>
+  </div>
+</div>

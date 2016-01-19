@@ -5,15 +5,14 @@ define([
 
   'views/main/box',
   'views/tasks/task',
+  'views/tasks/comments',
 
-], function($, _, Backbone, BoxView, TaskView){
-
-
-
+], function($, _, Backbone, BoxView, TaskView, CommentsListView){
     var TaskPageView = Backbone.View.extend({
 
       initialize: function(options){
           this.task = new TaskView(options);
+          this.comments = new CommentsListView(options);
       },
 
       render: function() {
@@ -23,7 +22,7 @@ define([
             context: {
               title: 'Задача',
               body: this.task.$el,
-              footer: null
+              footer: this.comments.$el
             }
           });
       }

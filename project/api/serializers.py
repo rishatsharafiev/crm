@@ -68,7 +68,8 @@ class EmployeeChildField(serializers.RelatedField):
 
 class TaskSerializer(serializers.ModelSerializer):
     owner =  serializers.PrimaryKeyRelatedField(read_only=True, required=False)
-    base_task = TaskParentSerializer(read_only=True)
+    base_task =  serializers.PrimaryKeyRelatedField(queryset=Task.objects.all(), required=False, allow_null=True)
+
     project_name = serializers.CharField(
        source='project', read_only=True, required=False
     )
@@ -78,6 +79,28 @@ class TaskSerializer(serializers.ModelSerializer):
     responsible_name = EmployeeChildField(
        source='responsible', read_only=True,required=False
     )
+
+    base_task_name = serializers.CharField(
+       source='base_task', read_only=True, required=False
+    )
+
+    put_method_allowed = serializers.SerializerMethodField()
+    delete_method_allowed = serializers.SerializerMethodField()
+
+    def get_put_method_allowed(self, obj):
+        user = self.context['request'].user
+        authenticated = user.is_authenticated()
+        staff = authenticated and user.is_staff
+        owner = authenticated and (obj.owner == user)
+        responsible = authenticated and (obj.responsible == user)
+        return  staff or owner or responsible
+
+    def get_delete_method_allowed(self, obj):
+        user = self.context['request'].user
+        authenticated = user.is_authenticated()
+        staff = authenticated and user.is_staff
+        owner = authenticated and (obj.owner == user)
+        return  staff or owner
 
     class Meta:
         model = Task
@@ -96,11 +119,18 @@ class TaskSerializer(serializers.ModelSerializer):
             'project_name',
             'owner_name',
             'responsible_name',
+            'base_task_name',
+            'put_method_allowed',
+            'delete_method_allowed'
         )
 
 
+
 class CommentSerializer(serializers.ModelSerializer):
-    owner = EmployeeSerializer(read_only=True)
+    employee =  serializers.PrimaryKeyRelatedField(read_only=True, required=False)
+    employee_name = serializers.CharField(
+       source='employee', read_only=True, required=False
+    )
     class Meta:
         model = Comment
 

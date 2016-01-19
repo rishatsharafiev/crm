@@ -58,7 +58,7 @@ define([
                 if(response.token && atob) {
                   var jwt = response.token.split('.');
                   var payload = JSON.parse(atob(jwt[1]));
-                  var days = payload.exp;
+                  $.cookie('user_id', payload.user_id, {'expire': 7});
                   $.cookie('access_token', response.token, {'expire': 7});
                   Backbone.navigate('');
                 }

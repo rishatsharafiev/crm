@@ -15,7 +15,7 @@ define([
   var TaskCollection = Backbone.PageableCollection.extend({
     model: TaskModel,
     mode: 'server',
-    url: '/api/task/',
+    url: '/api/task',
 
     resultsField: 'results',
     totalRecordsField: 'count',

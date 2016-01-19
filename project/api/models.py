@@ -68,7 +68,7 @@ class Task(models.Model):
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, verbose_name='Статус')
 
     def __unicode__(self):
-        return u'%s %s' % (self.title, self.created_date.strftime("%A, %d. %B %Y %I:%M%p"))
+        return u'%s' % (self.title)
 
     class Meta:
         ordering = ('created_date',)

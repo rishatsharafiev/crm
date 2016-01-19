@@ -30,13 +30,9 @@ class TaskPermission(permissions.BasePermission):
         for i in task:
             ids.append(i.id)
 
-        def walk(task):
-            if task.base_task:
-                ids.append(task.base_task.id)
-                walk(task.base_task)
-
         for i in task:
-            walk(i)
+            if i.base_task:
+                ids.append(i.base_task.id)
 
         task = Task.objects.filter(id__in=ids)
 

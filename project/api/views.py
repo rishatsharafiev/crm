@@ -2,7 +2,8 @@
 
 from django.db.models import Q, F
 from rest_framework.response import Response
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
+from rest_framework.metadata import SimpleMetadata
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
@@ -43,6 +44,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = (TaskPermission,)
+    metadata_class = SimpleMetadata
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('project', )
     search_fields = ('title',)
@@ -57,28 +59,29 @@ class TaskViewSet(viewsets.ModelViewSet):
         for i in task:
             ids.append(i.id)
 
-        def walk(task):
-            if task.base_task:
-                ids.append(task.base_task.id)
-                walk(task.base_task)
-
         for i in task:
-            walk(i)
+            if i.base_task:
+                ids.append(i.base_task.id)
 
         task = Task.objects.filter(id__in=ids)
+
         return task
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    def perform_update(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
+    @detail_route(methods=['GET'])
+    def schema(self, request, pk=None):
+        meta = self.metadata_class()
+        data = meta.determine_metadata(request, self)
+        return Response(data)
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(employee=self.request.user)
 
 class TaskPictureViewSet(viewsets.ModelViewSet):
     queryset = TaskPicture.objects.all()
