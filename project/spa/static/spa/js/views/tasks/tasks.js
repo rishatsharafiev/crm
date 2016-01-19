@@ -31,7 +31,7 @@ define([
           return this;
         }
       }),
-      sortable: false,
+      sortable: true,
       editable: false
      }, {
       name: "base_task",
@@ -48,7 +48,7 @@ define([
           return this;
         }
       }),
-      sortable: false,
+      sortable: true,
       editable: false
      }, {
         name: "owner_name",
@@ -62,7 +62,7 @@ define([
             return this;
           }
         }),
-        sortable: false,
+        sortable: true,
         editable: false,
      }, {
         name: "responsible_name",
@@ -76,13 +76,13 @@ define([
             return this;
           }
         }),
-        sortable: false,
+        sortable: true,
         editable: false,
      },
      {
         name: "project_title",
         label: "Проект",
-        sortable: false,
+        sortable: true,
         editable: false,
         cell: Backgrid.UriCell.extend({
           render: function(){
