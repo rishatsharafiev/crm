@@ -4,6 +4,7 @@ define([
   'backbone',
 
   'views/main/box',
+  'views/tags/box_header',
 
   'text!templates/tasks/tasks.html',
   'collections/tasks_pageable',
@@ -12,7 +13,7 @@ define([
   'backgrid-paginator',
   'backgrid-text-cell',
   'backgrid-moment-cell'
-], function($, _, Backbone, BoxView, listTemplate, TaskCollection){
+], function($, _, Backbone, BoxView, BoxHeaderView, listTemplate, TaskCollection){
   var columns = [{
       name: "id",
       label: "#",
@@ -145,6 +146,12 @@ define([
     initialize: function() {
       _.bindAll(this,'render');
       this.collection =  new TaskCollection();
+
+      this.task_header = new BoxHeaderView({
+        title: 'Задачи',
+        url: '#tasks/add',
+        url_name: 'Добавить задачу'
+      });
     },
 
     render: function() {
@@ -157,16 +164,20 @@ define([
         collection: this.collection
       });
 
+
+
       var boxView = new BoxView();
 
       boxView.render({
         el: '#box',
         context: {
-          title: 'Задачи',
+          header: this.task_header.render(),
           body: grid.render().$el,
           footer: paginator.render().$el
         }
       });
+
+      console.log(this.task_header.render())
 
       this.collection.fetch({reset: true});
       return this;

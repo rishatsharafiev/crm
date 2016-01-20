@@ -5,7 +5,9 @@ define(function(require){
 
   var BaseView = require('views/main/base');
   var LoginView = require('views/auth/login');
+
   var TaskListView = require('views/tasks/tasks');
+  var TaskAddView = require('views/tasks/task_add');
   var TaskPageView = require('views/tasks/task_page');
 
   var ProjectListView = require('views/projects/projects');
@@ -21,11 +23,14 @@ define(function(require){
       '': 'showTasks',
       'login': 'login',
       'logout': 'logout',
+
       'tasks': 'showTasks',
+      'tasks/add': 'addTask',
       'tasks/:id': 'showTask',
+
       'projects': 'showProjects',
       'employees': 'showEmployees',
-      'employees/:id': 'showEmployee',
+      // 'employees/:id': 'showEmployee',
       'subdivisions': 'showSubdivisions',
       // Default
       '*actions': 'defaultAction'
@@ -65,6 +70,11 @@ define(function(require){
     showTasks: function(){
       var taskListView = new TaskListView();
       taskListView.render();
+    },
+
+    addTask: function(){
+      var taskAddView = new TaskAddView();
+      taskAddView.render();
     },
 
     showTask: function(id){

@@ -5,6 +5,7 @@ define([
   'moment',
 
   'views/main/box',
+  'views/tags/box_header',
 
   'collections/subdivisions_pageable',
 
@@ -12,7 +13,7 @@ define([
   'backgrid-paginator',
   'backgrid-text-cell',
   'backgrid-moment-cell'
-], function($, _, Backbone, moment, BoxView, SubdivisionsCollection){
+], function($, _, Backbone, moment, BoxView, BoxHeaderView, SubdivisionsCollection){
   var columns = [{
       name: "id",
       label: "#",
@@ -67,6 +68,11 @@ define([
     initialize: function() {
       _.bindAll(this,'render');
       this.collection =  new SubdivisionsCollection();
+      this.boxHeader = new BoxHeaderView({
+        title: 'Подразделения',
+        url: '#subdivisions/add',
+        url_name: 'Добавить подразделение'
+      });
     },
 
     render: function() {
@@ -84,7 +90,7 @@ define([
       boxView.render({
         el: '#box',
         context: {
-          title: 'Подразделения',
+          header: this.boxHeader.render() ,
           body: grid.render().$el,
           footer: paginator.render().$el
         }

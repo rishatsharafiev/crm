@@ -4,6 +4,7 @@ define([
   'backbone',
 
   'views/main/box',
+  'views/tags/box_header',
 
   'collections/projects_pageable',
 
@@ -11,7 +12,7 @@ define([
   'backgrid-paginator',
   'backgrid-text-cell',
   'backgrid-moment-cell'
-], function($, _, Backbone, BoxView, ProjectsCollection){
+], function($, _, Backbone, BoxView, BoxHeaderView, ProjectsCollection){
   var columns = [{
       name: "id",
       label: "#",
@@ -76,6 +77,11 @@ define([
     initialize: function() {
       _.bindAll(this,'render');
       this.collection =  new ProjectsCollection();
+      this.boxHeader = new BoxHeaderView({
+        title: 'Проекты',
+        url: '#projects/add',
+        url_name: 'Добавить проект'
+      });
     },
 
     render: function() {
@@ -93,7 +99,7 @@ define([
       boxView.render({
         el: '#box',
         context: {
-          title: 'Проекты',
+          header: this.boxHeader.render(),
           body: grid.render().$el,
           footer: paginator.render().$el
         }

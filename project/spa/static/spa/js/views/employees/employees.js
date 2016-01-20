@@ -5,6 +5,7 @@ define([
   'moment',
 
   'views/main/box',
+  'views/tags/box_header',
 
   'collections/employees_pageable',
 
@@ -12,7 +13,7 @@ define([
   'backgrid-paginator',
   'backgrid-text-cell',
   'backgrid-moment-cell'
-], function($, _, Backbone, moment, BoxView, EmployeesCollection){
+], function($, _, Backbone, moment, BoxView, BoxHeaderView, EmployeesCollection){
   var columns = [{
       name: "id",
       label: "#",
@@ -100,6 +101,11 @@ define([
     initialize: function() {
       _.bindAll(this,'render');
       this.collection =  new EmployeesCollection();
+      this.boxHeader = new BoxHeaderView({
+        title: 'Сотрудники',
+        url: '#employees/add',
+        url_name: 'Добавить сотрудника'
+      });
     },
 
     render: function() {
@@ -117,7 +123,7 @@ define([
       boxView.render({
         el: '#box',
         context: {
-          title: 'Сотрудники',
+          header: this.boxHeader.render(),
           body: grid.render().$el,
           footer: paginator.render().$el
         }
