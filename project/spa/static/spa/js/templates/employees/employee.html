@@ -1,0 +1,66 @@
+<ul class="timeline">
+  <!-- timeline item -->
+  <li>
+    <i class="fa fa-envelope bg-blue"></i>
+    <div class="timeline-item" id="employee" data-employee-id="<%= employee.id ? employee.id : '' %>">
+      <span class="time"><i class="fa fa-clock-o"></i>  <%=  moment(employee.created_date).format("DD MMMM YYYY, HH:mm:ss") %></span>
+      <h3 class="timeline-header" id="employee_title" ><%= employee.user.username ? employee.user.username : '' %></h3>
+      <div class="timeline-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="first_name">Имя</label>
+              <input id="first_name" type="text" class="form-control" value="<%= employee.user.first_name ? employee.user.first_name : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="last_name">Фамилия</label>
+              <input id="last_name" type="text" class="form-control" value="<%= employee.user.last_name ? employee.user.last_name : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input id="email" type="email" class="form-control" value="<%= employee.user.email ? employee.user.email : '' %>">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <span class="text-muted">Проект</span>
+            <div id="project_list"></div>
+          </div>
+          <div class="col-md-6">
+            <span class="text-muted">Базовая задача</span>
+            <div id="base_employee_list"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <span class="text-muted">Ответственный</span>
+            <div id="responsible_list"></div>
+          </div>
+          <div class="col-md-2">
+            <span class="text-muted">Приоритет</span>
+            <div id="priority_list"></div>
+          </div>
+          <div class="col-md-2">
+            <span class="text-muted">Статус</span>
+            <div id="status_list"></div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+      <div class="timeline-footer">
+        <% if (employee.put_method_allowed) { %>
+          <a class="edit btn btn-primary btn-xs">Обновить</a>
+        <% } %>
+        <% if (employee.delete_method_allowed) { %>
+          <a class="destroy btn btn-danger btn-xs">Удалить</a>
+        <% } %>
+
+          <a class="btn btn-success btn-xs pull-right" disabled="disabled"><i class="fa fa-user"></i> <%= employee.owner_name ? employee.owner_name : '' %></a><div class="clearfix"></div>
+      </div>
+    </div>
+  </li>
+  <!-- END timeline item -->
+</ul>

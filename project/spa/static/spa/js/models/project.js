@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone){
   var ProjectModel = Backbone.Model.extend({
-    urlRoot: '/api/task'
+    urlRoot: '/api/project'
   });
   return ProjectModel;
 });

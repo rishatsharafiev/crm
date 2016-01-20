@@ -8,14 +8,25 @@ define(function(require){
   var TaskListView = require('views/tasks/tasks');
   var TaskPageView = require('views/tasks/task_page');
 
+  var ProjectListView = require('views/projects/projects');
+
+  var EmployeesListView = require('views/employees/employees');
+  var EmployeePageView = require('views/employees/employee_page');
+
+  var SubdivisionsListView = require('views/subdivisions/subdivisions');
+
   var AppRouter = Backbone.Router.extend({
     routes: {
       // Define some URL routes
-      '': 'showIndex',
+      '': 'showTasks',
       'login': 'login',
       'logout': 'logout',
       'tasks': 'showTasks',
       'tasks/:id': 'showTask',
+      'projects': 'showProjects',
+      'employees': 'showEmployees',
+      'employees/:id': 'showEmployee',
+      'subdivisions': 'showSubdivisions',
       // Default
       '*actions': 'defaultAction'
     },
@@ -61,6 +72,28 @@ define(function(require){
         var taskPageView = new TaskPageView({id: id});
         taskPageView.render();
       }
+    },
+
+    showProjects: function(){
+      var projectListView = new ProjectListView();
+      projectListView.render();
+    },
+
+    showEmployees: function(){
+      var employeesListView = new EmployeesListView();
+      employeesListView.render();
+    },
+
+    showEmployee: function(id){
+      if (id && id.match(/^\d+$/)){
+        var employeePageView = new EmployeePageView({id: id});
+        employeePageView.render();
+      }
+    },
+
+    showSubdivisions: function(){
+      var subdivisionsListView = new SubdivisionsListView();
+      subdivisionsListView.render();
     },
   });
 

@@ -10,8 +10,8 @@ router.register(r'subdivision', views.SubdivisionViewSet)
 router.register(r'project', views.ProjectViewSet)
 router.register(r'task', views.TaskViewSet, base_name='task')
 router.register(r'comment', views.CommentViewSet)
-router.register(r'task_picture', views.TaskPictureViewSet)
-router.register(r'comment_picture', views.CommentPictureViewSet)
+# router.register(r'task_picture', views.TaskPictureViewSet)
+# router.register(r'comment_picture', views.CommentPictureViewSet)
 
 
 urlpatterns = [

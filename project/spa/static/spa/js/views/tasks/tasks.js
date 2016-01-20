@@ -6,7 +6,7 @@ define([
   'views/main/box',
 
   'text!templates/tasks/tasks.html',
-  'collections/tasks',
+  'collections/tasks_pageable',
 
   'backgrid',
   'backgrid-paginator',
@@ -17,7 +17,7 @@ define([
       name: "id",
       label: "#",
       cell: Backgrid.IntegerCell.extend({ orderSeparator: '' }),
-      sortable: false,
+      sortable: true,
       editable: false
     }, {
       name: "title",

@@ -75,13 +75,13 @@ class Task(models.Model):
         verbose_name = u'Задача'
         verbose_name_plural = u'Задачи'
 
-class TaskPicture(models.Model):
-    path = models.ImageField(upload_to='pictures/tasks/%Y/%m/%d', verbose_name='Изображение')
-    task = models.ForeignKey(Task, verbose_name='Задача')
+# class TaskPicture(models.Model):
+#     path = models.ImageField(upload_to='pictures/tasks/%Y/%m/%d', verbose_name='Изображение')
+#     task = models.ForeignKey(Task, verbose_name='Задача')
 
-    class Meta:
-        verbose_name = u'Изображение из задачи'
-        verbose_name_plural = u'Изображения из задач'
+#     class Meta:
+#         verbose_name = u'Изображение из задачи'
+#         verbose_name_plural = u'Изображения из задач'
 
 class Comment(models.Model):
     task = models.ForeignKey(Task, verbose_name='Задача')
@@ -97,10 +97,10 @@ class Comment(models.Model):
         verbose_name = u'Комментарий'
         verbose_name_plural = u'Комментарии'
 
-class CommentPicture(models.Model):
-    path = models.ImageField(upload_to='pictures/comments/%Y/%m/%d', verbose_name='Изображение')
-    comment = models.ForeignKey(Comment, verbose_name='Комментарий')
+# class CommentPicture(models.Model):
+#     path = models.ImageField(upload_to='pictures/comments/%Y/%m/%d', verbose_name='Изображение')
+#     comment = models.ForeignKey(Comment, verbose_name='Комментарий')
 
-    class Meta:
-        verbose_name = u'Изображение из комментария'
-        verbose_name_plural = u'Изображения из комментариев'
+#     class Meta:
+#         verbose_name = u'Изображение из комментария'
+#         verbose_name_plural = u'Изображения из комментариев'

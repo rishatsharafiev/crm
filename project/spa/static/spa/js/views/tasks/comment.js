@@ -15,8 +15,7 @@ define([
 
       template: _.template( commentsTemplate ),
 
-      initialize:function(options){
-          this.options = options;
+      initialize:function(){
       },
 
       render:function(){

@@ -6,6 +6,10 @@
   text-align: left;
 }
 
+.backgrid td {
+  text-align: left;
+}
+
 .box .box-body {
   min-height: 25em;
 }

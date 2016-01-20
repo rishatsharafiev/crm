@@ -10,11 +10,8 @@ define([
   'views/tags/select_status',
   'views/tags/select_base_task',
 
-  'text!templates/tasks/task.html',
-  'models/task',
-
-  'views/tasks/comments',
-  // 'jquery.cookie'
+  'text!templates/employees/employee.html',
+  'models/employee',
 ], function($,
   _,
   Backbone,
@@ -29,7 +26,7 @@ define([
   CommentsListView){
 
   var TaskView = Backbone.View.extend({
-    className: 'task',
+    className: 'employee',
 
     template:  _.template( taskTemplate ),
 
@@ -43,13 +40,12 @@ define([
     },
 
     render: function() {
-        this.$el.html(this.template({ task: this.model.toJSON(), moment: moment }));
-        this.renderProjects();
-        this.renderBaseTasks();
-        this.renderResponsibles();
-        this.renderPriority();
-        this.renderStatus();
-        this.renderComments();
+        this.$el.html(this.template({ employee: this.model.toJSON(), moment: moment }));
+        // this.renderProjects();
+        // this.renderBaseTasks();
+        // this.renderResponsibles();
+        // this.renderPriority();
+        // this.renderStatus();
         return this.$el;
     },
 
@@ -81,10 +77,6 @@ define([
     renderStatus: function () {
         var select = new SelectStatusView({id: this.model.get('status')});
         this.$('#status_list').html( select.render().el );
-    },
-
-    renderComments: function() {
-        var comments = new CommentsListView({ el: $('.comments_list').find('.comment-add'), task_id: this.model.get('id') });
     },
 
     edit: function(){

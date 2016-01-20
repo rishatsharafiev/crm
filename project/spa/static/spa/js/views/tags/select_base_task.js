@@ -4,7 +4,7 @@ define([
   'backbone',
 
   'views/tags/option_base_task',
-  'collections/tasks'
+  'collections/tasks_pageable'
 ], function($, _, Backbone, ItemView, TasksCollection){
     var CollectionView = Backbone.View.extend({
         tagName: 'select',

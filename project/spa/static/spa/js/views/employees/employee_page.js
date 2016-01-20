@@ -4,14 +4,14 @@ define([
   'backbone',
 
   'views/main/box',
-  'views/tasks/task',
+  'views/employees/employee',
 
 
-], function($, _, Backbone, BoxView, TaskView, CommentsListView){
-    var TaskPageView = Backbone.View.extend({
+], function($, _, Backbone, BoxView, EmployeesView){
+    var EmployeesPageView = Backbone.View.extend({
 
       initialize: function(options){
-          this.task = new TaskView(options);
+          this.employees = new EmployeesView(options);
       },
 
       render: function() {
@@ -19,13 +19,13 @@ define([
           boxView.render({
             el: '#box',
             context: {
-              title: 'Задача',
-              body: this.task.$el,
+              title: 'Сотрудник',
+              body: this.employees.$el,
               footer: null
             }
           });
       }
     });
 
-    return TaskPageView;
+    return EmployeesPageView;
 });

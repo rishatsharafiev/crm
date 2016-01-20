@@ -60,7 +60,7 @@ define([
                   var payload = JSON.parse(atob(jwt[1]));
                   $.cookie('user_id', payload.user_id, {'expire': 7});
                   $.cookie('access_token', response.token, {'expire': 7});
-                  Backbone.navigate('');
+                  Backbone.navigate('tasks');
                 }
               },
               error: function(model, response) {

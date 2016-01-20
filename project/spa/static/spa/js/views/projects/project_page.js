@@ -4,14 +4,14 @@ define([
   'backbone',
 
   'views/main/box',
-  'views/tasks/task',
+  'views/projects/project',
 
 
-], function($, _, Backbone, BoxView, TaskView, CommentsListView){
-    var TaskPageView = Backbone.View.extend({
+], function($, _, Backbone, BoxView, ProjectView, CommentsListView){
+    var ProjectPageView = Backbone.View.extend({
 
       initialize: function(options){
-          this.task = new TaskView(options);
+          this.project = new ProjectView(options);
       },
 
       render: function() {
@@ -19,13 +19,13 @@ define([
           boxView.render({
             el: '#box',
             context: {
-              title: 'Задача',
-              body: this.task.$el,
+              title: 'Проект',
+              body: this.project.$el,
               footer: null
             }
           });
       }
     });
 
-    return TaskPageView;
+    return ProjectPageView;
 });

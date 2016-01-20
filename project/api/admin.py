@@ -10,8 +10,8 @@ from .models import (
     Project,
     Task,
     Comment,
-    TaskPicture,
-    CommentPicture
+    # TaskPicture,
+    # CommentPicture
   )
 
 class EmployeeInline(admin.StackedInline):
@@ -42,11 +42,11 @@ class CommentAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_date'
     readonly_fields = ('created_date',)
 
-class TaskPictureAdmin(admin.ModelAdmin):
-    pass
+# class TaskPictureAdmin(admin.ModelAdmin):
+#     pass
 
-class CommentPictureAdmin(admin.ModelAdmin):
-    pass
+# class CommentPictureAdmin(admin.ModelAdmin):
+#     pass
 
 
 # Re-register UserAdmin
@@ -56,5 +56,5 @@ admin.site.register(Subdivision, SubdivisionAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(TaskPicture, TaskPictureAdmin)
-admin.site.register(CommentPicture, CommentPictureAdmin)
+# admin.site.register(TaskPicture, TaskPictureAdmin)
+# admin.site.register(CommentPicture, CommentPictureAdmin)

@@ -3,7 +3,6 @@
 from django.db.models import Q, F
 from rest_framework.response import Response
 from rest_framework.decorators import list_route, detail_route
-from rest_framework.metadata import SimpleMetadata
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
@@ -13,8 +12,8 @@ from .models import (
     Project,
     Task,
     Comment,
-    TaskPicture,
-    CommentPicture
+    # TaskPicture,
+    # CommentPicture
   )
 
 from .serializers import (
@@ -23,28 +22,58 @@ from .serializers import (
     ProjectSerializer,
     TaskSerializer,
     CommentSerializer,
-    TaskPictureSerializer,
-    CommentPictureSerializer
+    # TaskPictureSerializer,
+    # CommentPictureSerializer
   )
-from .permissions import TaskPermission
 
+from .permissions import (
+    TaskPermission,
+    ProjectPermission,
+    EmployeePermission,
+    SubdivisionPermission
+  )
 class EmployeeViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     queryset = Employee.objects.all()
+    permission_classes = (EmployeePermission,)
     serializer_class = EmployeeSerializer
+
+    # def get_serializer_class(self, instance=None, data=None, many=False, partial=False):
+    #     if self.action == 'create':
+    #         return EmployeePostSerializer
+    #     else:
+    #         return EmployeeAllSerializer
+
+    # def update(self, request, *args, **kwargs):
+    #     user_profile = self.get_object()
+    #     serializer = self.get_serializer(user_profile, data=request.data, partial=True)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
+    #     return Response(serializer.data)
+
+
 
 class SubdivisionViewSet(viewsets.ModelViewSet):
     queryset = Subdivision.objects.all()
+    permission_classes = (SubdivisionPermission,)
     serializer_class = SubdivisionSerializer
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
+    permission_classes = (ProjectPermission,)
     serializer_class = ProjectSerializer
+    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    filter_fields = ('owner', )
+    search_fields = ('title',)
+    ordering_fields = ('created_date',)
+    ordering = ('-created_date',)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = (TaskPermission,)
-    metadata_class = SimpleMetadata
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
     filter_fields = ('project', )
     search_fields = ('title',)
@@ -79,15 +108,17 @@ class TaskViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('task', )
 
     def perform_create(self, serializer):
         serializer.save(employee=self.request.user)
 
-class TaskPictureViewSet(viewsets.ModelViewSet):
-    queryset = TaskPicture.objects.all()
-    serializer_class = TaskPictureSerializer
+# class TaskPictureViewSet(viewsets.ModelViewSet):
+#     queryset = TaskPicture.objects.all()
+#     serializer_class = TaskPictureSerializer
 
-class CommentPictureViewSet(viewsets.ModelViewSet):
-    queryset = CommentPicture.objects.all()
-    serializer_class = CommentPictureSerializer
+# class CommentPictureViewSet(viewsets.ModelViewSet):
+#     queryset = CommentPicture.objects.all()
+#     serializer_class = CommentPictureSerializer
 
