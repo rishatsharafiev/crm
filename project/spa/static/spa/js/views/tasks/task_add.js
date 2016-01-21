@@ -2,7 +2,6 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'moment',
 
   'views/tags/select_project',
   'views/tags/select_employee',
@@ -10,13 +9,12 @@ define([
   'views/tags/select_status',
   'views/tags/select_base_task',
 
-  'text!templates/tasks/task.html',
+  'text!templates/tasks/task_add.html',
   'models/task',
   // 'jquery.cookie'
 ], function($,
   _,
   Backbone,
-  moment,
   SelectProjectView,
   SelectEmployeeView,
   SelectPriorityView,
@@ -31,16 +29,13 @@ define([
     template:  _.template( taskTemplate ),
 
     initialize: function(options){
-        this.model = new TaskModel();
-        this.model.fetch({reset: true});
 
-        this.listenTo(this.model, 'reset', this.render);
-        this.listenTo(this.model, 'change', this.render);
-        this.listenTo(this.model, 'destroy', this.render);
     },
 
     render: function() {
-        this.$el.html(this.template({ task: this.model.toJSON(), moment: moment }));
+        this.$el.html(this.template({  }));
+        this.$('#error').hide();
+        this.$('#error_text').html('');
         this.renderProjects();
         this.renderBaseTasks();
         this.renderResponsibles();
@@ -50,59 +45,63 @@ define([
     },
 
     events: {
-        'click .edit' : 'edit',
-        'click .destroy': 'destroy'
+      'click .add':'add'
     },
 
     renderProjects: function () {
-        var select = new SelectProjectView({id: this.model.get('project')});
+        var select = new SelectProjectView({});
         this.$('#project_list').html( select.render().el );
     },
 
     renderBaseTasks: function () {
-        var select = new SelectBaseTask({id: this.model.get('base_task')});
+        var select = new SelectBaseTask({});
         this.$('#base_task_list').html( select.render().el );
     },
 
     renderResponsibles: function () {
-        var select = new SelectEmployeeView({id: this.model.get('responsible')});
+        var select = new SelectEmployeeView({});
         this.$('#responsible_list').html( select.render().el );
     },
 
     renderPriority: function () {
-        var select = new SelectPriorityView({id: this.model.get('priority')});
+        var select = new SelectPriorityView({id: 0});
         this.$('#priority_list').html( select.render().el );
     },
 
     renderStatus: function () {
-        var select = new SelectStatusView({id: this.model.get('status')});
+        var select = new SelectStatusView({id: 0});
         this.$('#status_list').html( select.render().el );
     },
 
-    edit: function(){
-        var title = this.$('#task_title').text();
-        var text = this.$('#task_text').text();
+    add: function(e) {
+        e.preventDefault();
+
+        var title = this.$('#task_title').val();
+        var text = this.$('#task_text').val();
         var project = this.$('#project_list').find('option:selected').val();
         var base_task = this.$('#base_task_list').find('option:selected').val();
         var priority = this.$('#priority_list').find('option:selected').val();
         var responsible = this.$('#responsible_list').find('option:selected').val();
         var status = this.$('#status_list').find('option:selected').val();
 
-        if(status != 3 || this.model.get('owner') == $.cookie('user_id') ) {
-          this.model.set('status', status);
+        if(!title || !text || !project || !priority || !responsible || !status) {
+          this.$('#error').show();
+          this.$('#error_text').html('Заполните все поля');
+          return;
         }
 
-        this.model.set('title', title);
-        this.model.set('text', text);
-        this.model.set('project', project);
-        this.model.set('base_task', base_task);
-        this.model.set('priority', priority);
-        this.model.set('responsible', responsible);
-        this.model.save({patch:true});
-    },
+        var taskObj = {
+          'title': title,
+          'text': text,
+          'project': project,
+          'base_task': base_task,
+          'priority': priority,
+          'responsible': responsible,
+          'status': status
+        }
 
-    destroy: function(){
-        this.model.destroy({
+        var model = new TaskModel(taskObj);
+        model.save({}, {
           success: function() {
             Backbone.navigate('tasks', true);
           }

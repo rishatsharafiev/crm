@@ -7,7 +7,7 @@ define(function(require){
   var LoginView = require('views/auth/login');
 
   var TaskListView = require('views/tasks/tasks');
-  var TaskAddView = require('views/tasks/task_add');
+  var TaskAddPageView = require('views/tasks/task_add_page');
   var TaskPageView = require('views/tasks/task_page');
 
   var ProjectListView = require('views/projects/projects');
@@ -73,8 +73,8 @@ define(function(require){
     },
 
     addTask: function(){
-      var taskAddView = new TaskAddView();
-      taskAddView.render();
+      var taskAddPageView = new TaskAddPageView();
+      taskAddPageView.render();
     },
 
     showTask: function(id){

@@ -177,8 +177,6 @@ define([
         }
       });
 
-      console.log(this.task_header.render())
-
       this.collection.fetch({reset: true});
       return this;
     }

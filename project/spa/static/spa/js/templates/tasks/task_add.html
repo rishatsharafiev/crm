@@ -1,0 +1,65 @@
+<ul class="timeline">
+  <!-- timeline item -->
+  <li>
+    <i class="fa fa-envelope bg-blue"></i>
+    <div class="timeline-item" id="task">
+      <span class="time"></span>
+      <h3 class="timeline-header"></h3>
+      <div class="timeline-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="task_title">Заголовок</label>
+              <input id="task_title" type="text" class="form-control" placeholder="Введите заголовок">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="task_text">Текст</label>
+              <textarea id="task_text" cols="30" class="form-control" rows="10" placeholder="Введите текст"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <span class="text-muted">Проект</span>
+            <div id="project_list"></div>
+          </div>
+          <div class="col-md-6">
+            <span class="text-muted">Базовая задача</span>
+            <div id="base_task_list"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <span class="text-muted">Ответственный</span>
+            <div id="responsible_list"></div>
+          </div>
+          <div class="col-md-2">
+            <span class="text-muted">Приоритет</span>
+            <div id="priority_list"></div>
+          </div>
+          <div class="col-md-2">
+            <span class="text-muted">Статус</span>
+            <div id="status_list"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div id="error" style="margin-top: 20px;" class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              <span id="error_text"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-footer">
+        <a class="add btn btn-primary btn-xs">Сохранить</a>
+      </div>
+    </div>
+  </li>
+  <!-- END timeline item -->
+</ul>
