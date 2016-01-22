@@ -37,20 +37,9 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     permission_classes = (EmployeePermission,)
     serializer_class = EmployeeSerializer
 
-    # def get_serializer_class(self, instance=None, data=None, many=False, partial=False):
-    #     if self.action == 'create':
-    #         return EmployeePostSerializer
-    #     else:
-    #         return EmployeeAllSerializer
-
-    # def update(self, request, *args, **kwargs):
-    #     user_profile = self.get_object()
-    #     serializer = self.get_serializer(user_profile, data=request.data, partial=True)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_update(serializer)
-    #     return Response(serializer.data)
-
-
+    # def get_queryset(self):
+    #     employee = Employee.objects.filter( user_id=self.request.user.id )
+    #     return employee
 
 class SubdivisionViewSet(viewsets.ModelViewSet):
     queryset = Subdivision.objects.all()
@@ -99,11 +88,11 @@ class TaskViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    @detail_route(methods=['GET'])
-    def schema(self, request, pk=None):
-        meta = self.metadata_class()
-        data = meta.determine_metadata(request, self)
-        return Response(data)
+    # @detail_route(methods=['GET'])
+    # def schema(self, request, pk=None):
+    #     meta = self.metadata_class()
+    #     data = meta.determine_metadata(request, self)
+    #     return Response(data)
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()

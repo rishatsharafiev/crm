@@ -35,9 +35,9 @@ define([
         cell: Backgrid.UriCell.extend({
           render: function(){
             var username = this.model.get("user")['username'];
-            var user_id = this.model.get("user")['id'];
+            var employee_id = this.model.get('id');
             this.$el.empty();
-            this.$el.append('<a href="#employees/'+user_id+'">'+username+'</a>');
+            this.$el.append('<a href="#employees/'+employee_id+'">'+username+'</a>');
             return this;
           }
         })

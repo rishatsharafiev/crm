@@ -5,11 +5,11 @@ from rest_framework.routers import DefaultRouter
 from api import views
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'employee', views.EmployeeViewSet)
-router.register(r'subdivision', views.SubdivisionViewSet)
-router.register(r'project', views.ProjectViewSet)
+router.register(r'employee', views.EmployeeViewSet, base_name='employee')
+router.register(r'subdivision', views.SubdivisionViewSet, base_name='subdivision')
+router.register(r'project', views.ProjectViewSet, base_name='project')
 router.register(r'task', views.TaskViewSet, base_name='task')
-router.register(r'comment', views.CommentViewSet)
+router.register(r'comment', views.CommentViewSet, base_name='comment')
 # router.register(r'task_picture', views.TaskPictureViewSet)
 # router.register(r'comment_picture', views.CommentPictureViewSet)
 

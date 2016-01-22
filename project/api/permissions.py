@@ -80,7 +80,7 @@ class EmployeePermission(permissions.BasePermission):
         if view.action == 'list':
             return authenticated
         elif view.action == 'create':
-            return staff
+            return authenticated # staff
         elif view.action in ['retrieve', 'update', 'partial_update', 'destroy']:
             return authenticated
         else:
