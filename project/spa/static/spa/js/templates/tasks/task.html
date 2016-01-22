@@ -4,11 +4,11 @@
     <i class="fa fa-envelope bg-blue"></i>
     <div class="timeline-item" id="task" data-task-id="<%= task.id ? task.id : '' %>">
       <span class="time"><i class="fa fa-clock-o"></i>  <%=  moment(task.created_date).format("DD MMMM YYYY, HH:mm:ss") %></span>
-      <h3 class="timeline-header" id="task_title" <% if (task.put_method_allowed) { %> contenteditable="true" <% } %> ><%= task.title ? task.title : '' %></h3>
+      <h3 class="timeline-header" id="task_title" <% if (task.put_method_allowed && task.delete_method_allowed) { %> contenteditable="true" <% } %> ><%= task.title ? task.title : '' %></h3>
       <div class="timeline-body">
         <div class="row">
           <div class="col-md-10">
-            <p id="task_text" <% if (task.put_method_allowed) { %> contenteditable="true" <% } %> ><%= task.text ? task.text : '' %></p>
+            <p id="task_text" <% if (task.put_method_allowed && task.delete_method_allowed) { %> contenteditable="true" <% } %> ><%= task.text ? task.text : '' %></p>
           </div>
         </div>
         <div class="row">

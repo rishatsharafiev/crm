@@ -100,10 +100,19 @@ define([
           this.model.set('status', status);
         }
 
+        if( this.model.get('status') == 3 || this.model.get('owner') != $.cookie('user_id') ) {
+          this.model.set('owner', this.model.get('status'));
+        }
+
+        if(base_task != 'null') {
+          this.model.set('base_task', base_task);
+        } else {
+          this.model.set("base_task", null);
+        }
+
         this.model.set('title', title);
         this.model.set('text', text);
         this.model.set('project', project);
-        this.model.set('base_task', base_task);
         this.model.set('priority', priority);
         this.model.set('responsible', responsible);
         this.model.save({patch:true});

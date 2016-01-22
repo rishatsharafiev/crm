@@ -15,43 +15,23 @@ from .models import (
   )
 
 class UserSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField()
-    # username = serializers.CharField()
-    # password = serializers.CharField()
-    # last_login = serializers.DateTimeField(required=False)
-    # first_name = serializers.CharField(required=False)
-    # last_name = serializers.CharField(required=False)
-    # email = serializers.EmailField(required=False)
-    # date_joined = serializers.DateTimeField(required=False)
-
     class Meta:
         model = User
         exclude = ('is_staff','is_superuser','is_active','groups','user_permissions')
         extra_kwargs = {
             'password': {
-                'write_only': True,
-                # 'validators': [],
-                # 'required':False
+                'required': False,
+                'write_only': True
             },
-            # 'username': {
-            #     'validators': [],
-            #     'required':False
-            # },
-            # 'id': {'read_only': False, 'required': False}
+            'username': {
+                'validators': []
+            }
         }
 
-    # def to_internal_value(self, data):
-    #     if 'id' in data and 'id' in self.fields:
-    #         try:
-    #             obj_id = self.fields['id'].to_internal_value(data['id'])
-    #         except ValidationError as exc:
-    #             raise ValidationError({'id': exc.detail})
-    #         for field in self.fields.values():
-    #             for validator in field.validators:
-    #                 if type(validator) == UniqueValidator:
-    #                     # Exclude id from queryset for checking uniqueness
-    #                     validator.queryset = validator.queryset.exclude(id=obj_id)
-    #     return super(WritableNestedModelSerializer, self).to_internal_value(data)
+    def restore_object(self, attrs, instance=None):
+        user = super(UserSerializer, self).restore_object(attrs, instance)
+        user.set_password(attrs['password'])
+        return user
 
 class EmployeeChildField(serializers.RelatedField):
     def to_representation(self, value):
@@ -84,42 +64,36 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = (
-            'id',
-            'link',
+            "id",
             'user',
+            'link',
             'subdivision',
             'subdivision_name',
             'put_method_allowed',
             'delete_method_allowed'
         )
+        related_obj_name = 'user'
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = User.objects.create(**user_data)
         user.set_password( user_data.get('password') )
+        user.save()
         employee = Employee.objects.create(user=user, **validated_data)
         return employee
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
-        user = instance.user
+        related_obj_name = self.Meta.related_obj_name
+        data = validated_data.pop(related_obj_name)
+        related_instance = getattr(instance, related_obj_name)
 
-        for key in validated_data:
-            instance[key] = validated_data.get(key, instance[key])
-
-        for key in user:
-            if key == 'password':
-                user.set_password( user_data.get('password') )
+        for attr_name, value in data.items():
+            if attr_name == 'password':
+                related_instance.set_password(value)
             else:
-                user[key] = user_data.get(
-                    key,
-                    user[key]
-                )
-
-        user.save()
-        instance.user = user
-        instance.save()
-        return instance
+                setattr(related_instance, attr_name, value)
+        related_instance.save()
+        return super(EmployeeSerializer,self).update(instance, validated_data)
 
 
 class SubdivisionChildField(serializers.RelatedField):
@@ -239,6 +213,7 @@ class TaskSerializer(serializers.ModelSerializer):
        source='base_task', read_only=True, required=False
     )
 
+    status_type = serializers.SerializerMethodField()
     put_method_allowed = serializers.SerializerMethodField()
     delete_method_allowed = serializers.SerializerMethodField()
 
@@ -256,6 +231,14 @@ class TaskSerializer(serializers.ModelSerializer):
         staff = authenticated and user.is_staff
         owner = authenticated and (obj.owner == user)
         return  staff or owner
+
+    def get_status_type(self, obj):
+        user = self.context['request'].user
+        authenticated = user.is_authenticated()
+        staff = authenticated and user.is_staff
+        owner = authenticated and (obj.owner == user)
+
+        return staff or owner
 
     class Meta:
         model = Task
@@ -276,7 +259,8 @@ class TaskSerializer(serializers.ModelSerializer):
             'responsible_name',
             'base_task_name',
             'put_method_allowed',
-            'delete_method_allowed'
+            'delete_method_allowed',
+            'status_type'
         )
 
 

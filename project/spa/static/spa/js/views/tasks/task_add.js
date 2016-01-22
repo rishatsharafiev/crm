@@ -94,10 +94,13 @@ define([
           'title': title,
           'text': text,
           'project': project,
-          'base_task': base_task,
           'priority': priority,
           'responsible': responsible,
           'status': status
+        }
+
+        if(base_task != 'null') {
+          taskObj['base_task'] = base_task;
         }
 
         var model = new TaskModel(taskObj);

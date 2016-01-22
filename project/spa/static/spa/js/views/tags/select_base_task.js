@@ -16,6 +16,8 @@ define([
             this.collection.fetch();
         },
         render:function(){
+            this.$el.html('');
+            this.$el.append('<option value="null">---</option>');
             _.each(this.collection.models,function( item ){
                 this.$el.append(new ItemView({id: this.options.id, model:item}).render());
             },this);

@@ -30,7 +30,7 @@ define(function(require){
 
       'projects': 'showProjects',
       'employees': 'showEmployees',
-      // 'employees/:id': 'showEmployee',
+      'employees/:id': 'showEmployee',
       'subdivisions': 'showSubdivisions',
       // Default
       '*actions': 'defaultAction'
