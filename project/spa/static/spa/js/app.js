@@ -8,7 +8,7 @@ define([
     Router.initialize();
   }
 
-  $.ajaxSetup({ cache: false });
+  // $.ajaxSetup({ cache: false });
 
   $( document ).on( 'click', 'a[href="#"]', function(e) {
       e.preventDefault();

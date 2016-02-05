@@ -19,7 +19,7 @@ define([
             this.$el.html('');
             this.$el.append('<option value="null">---</option>');
             _.each(this.collection.models,function( item ){
-                if(item.get('base_task') == this.options.id) return;
+                // if(item.get('base_task') == this.options.id) return;
                 this.$el.append(new ItemView({id: this.options.id, model:item}).render());
             },this);
             return this;
