@@ -3,6 +3,8 @@ define(function(require){
   var _ = require('underscore');
   var Backbone = require('backbone');
 
+  var ContainerView = require('views/main/container');
+
   var BaseView = require('views/main/base');
   var LoginView = require('views/auth/login');
 
@@ -101,9 +103,46 @@ define(function(require){
       }
     },
 
+    // showSubdivisions: function(){
+    //   var subdivisionsListView = new SubdivisionsListView();
+    //   subdivisionsListView.render();
+    // },
+
     showSubdivisions: function(){
+
+
+      var options = {
+        el: '#box',
+        views: {
+          header: 'views/main/header',
+          body: 'views/main/body',
+          footer: 'views/main/footer'
+        },
+
+        data: {
+          header: {
+            title: 'Подразделения',
+            button_name: 'Добавить подразделение',
+            button_link: '/#employees/add'
+          },
+          body: {
+
+          },
+          footer: {}
+        }
+      };
+
+      var containerView = new ContainerView();
+      containerView.render(options);
+
+      var SubdivisionsListView = require('views/subdivisions/list');
       var subdivisionsListView = new SubdivisionsListView();
       subdivisionsListView.render();
+
+      containerView.on('rendered', function() {
+        this.body.$el.html(subdivisionsListView.grid);
+        this.footer.$el.html(subdivisionsListView.paginator);
+      }, containerView);
     },
   });
 
