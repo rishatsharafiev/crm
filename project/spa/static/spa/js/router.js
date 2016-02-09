@@ -110,7 +110,6 @@ define(function(require){
 
     showSubdivisions: function(){
 
-
       var options = {
         el: '#box',
         views: {
@@ -123,7 +122,7 @@ define(function(require){
           header: {
             title: 'Подразделения',
             button_name: 'Добавить подразделение',
-            button_link: '/#employees/add'
+            button_link: '/#subdivisions/add'
           },
           body: {
 
