@@ -143,6 +143,42 @@ define(function(require){
         this.footer.$el.html(subdivisionsListView.paginator);
       }, containerView);
     },
+
+    // showSubdivision: function(id){
+    //   var options = {
+    //     el: '#box',
+    //     views: {
+    //       header: 'views/main/header',
+    //       body: 'views/main/body',
+    //       footer: 'views/main/footer'
+    //     },
+
+    //     data: {
+    //       header: {
+    //         title: 'Подразделения',
+    //         button_name: 'Добавить подразделение',
+    //         button_link: '/#subdivisions/add'
+    //       },
+    //       body: {
+
+    //       },
+    //       footer: {}
+    //     }
+    //   };
+
+    //   var containerView = new ContainerView();
+    //   containerView.render(options);
+
+    //   var SubdivisionView = require('views/subdivisions/page');
+
+    //   if (id && id.match(/^\d+$/)){
+    //     var subdivisionView = new SubdivisionView({id: id});
+    //     subdivisionView.render();
+    //     containerView.on('rendered', function() {
+    //       this.body.$el.html(subdivisionView.el);
+    //     }, containerView);
+    //   }
+    // },
   });
 
   var app_router = new AppRouter;

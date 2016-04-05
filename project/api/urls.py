@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^api-auth', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+
 urlpatterns += [
     url(r'^login$', 'rest_framework_jwt.views.obtain_jwt_token', name="api-login"),
     url(r'^api-token-verify$', 'rest_framework_jwt.views.verify_jwt_token'),
