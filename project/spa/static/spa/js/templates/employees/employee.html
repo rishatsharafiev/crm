@@ -1,0 +1,52 @@
+<ul class="timeline">
+  <!-- timeline item -->
+  <li>
+    <i class="fa fa-envelope bg-blue"></i>
+    <div class="timeline-item" id="employee" data-employee-id="<%= employee.id ? employee.id : '' %>">
+      <span class="time"></span>
+      <h3 class="timeline-header" id="employee_username" ><%= employee.user.username ? employee.user.username : '' %></h3>
+      <div class="timeline-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="first_name">Имя</label>
+              <input id="first_name" type="text" class="form-control" disabled="disabled" value="<%= employee.user.first_name ? employee.user.first_name : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="last_name">Фамилия</label>
+              <input id="last_name" type="text" class="form-control" disabled="disabled" value="<%= employee.user.last_name ? employee.user.last_name : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input id="email" type="email" class="form-control" disabled="disabled" value="<%= employee.user.email ? employee.user.email : '' %>">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="subdivision_name">Подразделение</label>
+              <input id="subdivision_name" type="text" class="form-control" disabled="disabled" value="<%= employee.subdivision_name ? employee.subdivision_name : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="last_login">Последний вход</label>
+
+              <input id="last_login" type="text" class="form-control" disabled="disabled" value="<%= employee.user.last_login ?  moment(employee.user.last_login).format("DD MMMM YYYY, HH:mm:ss") : '' %>">
+            </div>
+            <div class="form-group">
+              <label for="email">Дата вступления</label>
+              <input id="date_joined" type="text" class="form-control" disabled="disabled" value="<%= employee.user.date_joined ?  moment(employee.user.date_joined).format("DD MMMM YYYY, HH:mm:ss") : '' %>">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-footer">
+        <% if (employee.put_method_allowed) { %>
+          <a class="edit btn btn-primary btn-xs">Обновить</a>
+        <% } %>
+        <% if (employee.delete_method_allowed) { %>
+          <a class="destroy btn btn-danger btn-xs">Удалить</a>
+        <% } %>
+      </div>
+    </div>
+  </li>
+  <!-- END timeline item -->
+</ul>
